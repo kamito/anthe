@@ -8,7 +8,7 @@ import { $REDUCE_ERROR_EMIT_KEY } from './const';
 /**
  * Anthe.Core
  */
-export class Core {
+class Core {
 
   /**
    * @constructor
@@ -130,18 +130,5 @@ export class Core {
   }
 }
 
-// Create Core instance.
-let CoreInstance = new Core();
-
-/**
- * Add action.
- * @param {string} actionName Action name.
- * @param {function} callbacks Array of callback functions or one function.
- * @return {Core}
- */
-function action(...args) {
-  return CoreInstance.addAction(args);
-}
-
 // exports
-export default CoreInstance;
+export default Core;

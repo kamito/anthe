@@ -5,13 +5,14 @@ import sinon from 'sinon';
 import _ from 'lodash';
 import Immutable from 'immutable';
 
-import CoreInstance, { Core } from '../../src/anthe/core';
+import { Core, getCore } from '../../src/anthe';
 import { $REDUCE_ERROR_EMIT_KEY } from '../../src/anthe/const';
 
 
 describe("Anthe.Core", () => {
 
   it("is `Anthe.Core` Instance", () => {
+    let CoreInstance = getCore();
     assert(CoreInstance instanceof Core === true);
   });
 
