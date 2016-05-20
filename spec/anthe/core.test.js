@@ -208,7 +208,7 @@ describe("Anthe.Core", () => {
       let reduceEmitter = core.getReduceEmitter();
       reduceEmitter.on('myAction', (actionName, res1) => {
         assert(actionName === 'myAction');
-        assert.deepEqual(res1, ["result"]);
+        assert.deepEqual(res1, "result");
         done();
         return true;
       });
@@ -230,7 +230,30 @@ describe("Anthe.Core", () => {
       let reduceEmitter = core.getReduceEmitter();
       reduceEmitter.on('myAction', (actionName, res1) => {
         assert(actionName === 'myAction');
-        assert.deepEqual(res1, ["result"]);
+        assert.deepEqual(res1, "result");
+        done();
+        return true;
+      });
+
+      core.triggerAction("myAction", "test1", "test2");
+    });
+
+    it("call with Promise function to return some results", (done) => {
+      core.addAction('myAction', (arg1, arg2) => {
+        return new Promise((resolve, reject) => {
+          window.setTimeout(() => {
+            assert(arg1 === "test1");
+            assert(arg2 === "test2");
+            resolve(["result1", "result2"]);
+          }, 500);
+        });
+      });
+
+      let reduceEmitter = core.getReduceEmitter();
+      reduceEmitter.on('myAction', (actionName, res1, res2) => {
+        assert(actionName === 'myAction');
+        assert.deepEqual(res1, "result1");
+        assert.deepEqual(res2, "result2");
         done();
         return true;
       });

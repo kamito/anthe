@@ -47,14 +47,23 @@ class Core {
         .all(_.map(callbacks.toArray(), (callback) => {
           return new Promise((resolve, reject) => {
             try {
-              let rets = callback(...args);
-              resolve(rets);
+              let ret = callback(...args);
+              if (ret instanceof Promise) {
+                resolve(ret);
+              } else {
+                if (_.isUndefined(ret)) {
+                  resolve([]);
+                } else {
+                  resolve([ret]);
+                }
+              }
             } catch (err) {
               reject(err);
             };
           });
         }))
         .then((...results) => {
+          results = _.flattenDepth(results, 2);
           this.getReduceEmitter().emit(actionName, actionName, ...results);
         })
         .catch((error) => {
