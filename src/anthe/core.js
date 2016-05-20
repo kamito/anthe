@@ -77,12 +77,29 @@ class Core {
   }
 
   /**
+   * Add action(s).
+   * @param {string|object} actionNameOrList Action name or action list.
+   * @param {function|function[]|null|undefined} callbacks Array of callback functions or one function.
+   * @return {Core}
+   */
+  addAction(actionNameOrList, ...callbacks) {
+    if (_.isPlainObject(actionNameOrList)) {
+      _.forEach(actionNameOrList, (callbacks, actionName) => {
+        callbacks = _.castArray(callbacks);
+        this.addActionInternal(actionName, ...callbacks);
+      });
+    } else {
+      this.addActionInternal(actionNameOrList, ...callbacks);
+    }
+  }
+
+  /**
    * Add action.
    * @param {string} actionName Action name.
    * @param {function|function[]} callbacks Array of callback functions or one function.
    * @return {Core}
    */
-  addAction(actionName, ...callbacks) {
+  addActionInternal(actionName, ...callbacks) {
     let actions = this.getAction(actionName);
 
     // check callback is function

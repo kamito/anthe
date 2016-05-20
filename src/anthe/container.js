@@ -70,7 +70,24 @@ class Container extends React.Component {
    * @param {function|function[]} reducers Reduce functons.
    * @return {Anthe.Container}
    */
-  subscribe(actionName, ...reducers) {
+  subscribe(actionNameOrList, ...reducers) {
+    if (_.isPlainObject(actionNameOrList)) {
+      _.forEach(actionNameOrList, (reducers, actionName) => {
+        reducers = _.castArray(reducers);
+        this.subscribeInternal(actionName, ...reducers);
+      });
+    } else {
+      this.subscribeInternal(actionNameOrList, ...reducers);
+    }
+  }
+
+  /**
+   * Start subscribe.
+   * @param {string} actionName Action name.
+   * @param {function|function[]} reducers Reduce functons.
+   * @return {Anthe.Container}
+   */
+  subscribeInternal(actionName, ...reducers) {
     // check callback is function
     reducers = _.flattenDeep(_.castArray(reducers));
     let beforeReducersLength = reducers.length;

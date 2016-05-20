@@ -106,6 +106,41 @@ describe("Anthe.Core", () => {
         assert(ret.get('myAction').size === 2);
       });
     });
+
+    describe("actionName is object", () => {
+      let core = null;
+      beforeEach(() => {
+        core = new Core();
+      });
+
+      it("added one callback", () => {
+        let actionMap = { myspec: () => {} };
+        core.addAction(actionMap);
+        let ret = core.getActionMap();
+        assert(Immutable.Map.isMap(ret) === true);
+        assert(ret.size === 1);
+        assert(ret.get('myspec').size === 1);
+      });
+
+      it("added some callbacks", () => {
+        let actionMap = { myspec: [() => {}, () => {}, () => {}] };
+        core.addAction(actionMap);
+        let ret = core.getActionMap();
+        assert(Immutable.Map.isMap(ret) === true);
+        assert(ret.size === 1);
+        assert(ret.get('myspec').size === 3);
+      });
+
+      it("added some callbacks in array", () => {
+        let actionMap = { myspec: [() => {}, () => {}, () => {}] };
+        core.addAction(actionMap);
+        let ret = core.getActionMap();
+        assert(Immutable.Map.isMap(ret) === true);
+        assert(ret.size === 1);
+        assert(ret.get('myspec').size === 3);
+      });
+    });
+
   });
 
   describe("#getAction", () => {
