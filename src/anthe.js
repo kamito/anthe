@@ -1,15 +1,12 @@
 
-import Core from './anthe/core';
-
-let CoreInstance = new Core();
+import Core, { getCore } from './anthe/core';
+import Container from './anthe/container';
 
 /**
- * Return Anthe.Core instance
- * @return {Core}
+ * @type {Core}
  */
-function getCore() {
-  return CoreInstance;
-}
+let CoreInstance = getCore();
+
 
 /**
  * Add action.
@@ -32,10 +29,11 @@ function trigger(...args) {
 
 let Anthe = {
   Core: Core,
+  Container: Container,
   getCore: getCore,
   action: action,
   trigger: trigger
 };
 
 export default Anthe;
-export { Core, getCore, action, trigger };
+export { Core, getCore, Container, action, trigger };
