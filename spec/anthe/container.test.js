@@ -92,6 +92,23 @@ describe("Anthe.Container", () => {
         assert(Immutable.List.isList(resucers) === true);
         assert(resucers.size === 2);
       });
+
+      it("added subscribers", () => {
+        class SampleComponent extends Container {
+          initSubscribe() {
+            let subscribers = {
+              myAction1: () => {},
+              myAction2: () => {}
+            };
+            this.subscribe(subscribers);
+          }
+          render() { return (<div>Anthe</div>); }
+        }
+        container = TestUtils.renderIntoDocument(<SampleComponent />);
+        let resucers = container.getReducers('myAction1');
+        assert(Immutable.List.isList(resucers) === true);
+        assert(resucers.size === 1);
+      });
     });
 
     it("execute subscribe method", (done) => {
