@@ -33,7 +33,8 @@
   ],
   "scripts": {
     "build": "babel src --out-dir lib --source-maps-inline",
-    "test": "mocha --opts ./spec/mocha.opts ./spec"
+    "test": "mocha --opts ./spec/mocha.opts ./spec",
+    "prepublish": "npm run build"
   },
   "dependencies": {
     "eventemitter2": "~1.0",
