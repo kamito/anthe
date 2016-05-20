@@ -7,6 +7,7 @@ import { $REDUCE_ERROR_EMIT_KEY } from './const';
 
 /**
  * Anthe.Core
+ * @class
  */
 class Core {
 
@@ -59,6 +60,8 @@ class Core {
         .catch((error) => {
           this.getReduceEmitter().emit($REDUCE_ERROR_EMIT_KEY, error, actionName, ...args);
         });
+    } else {
+      this.getReduceEmitter().emit(actionName, actionName, ...args);
     }
   }
 
@@ -130,5 +133,19 @@ class Core {
   }
 }
 
+/**
+ * @type {Core}
+ */
+let CoreInstance = new Core();
+
+/**
+ * Return Anthe.Core instance
+ * @return {Core}
+ */
+function getCore() {
+  return CoreInstance;
+}
+
 // exports
 export default Core;
+export { getCore };
