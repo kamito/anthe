@@ -48,7 +48,7 @@ class Core {
           return new Promise((resolve, reject) => {
             try {
               let ret = callback(...args);
-              if (ret instanceof Promise) {
+              if (ret && _.isFunction(ret.then)) {
                 ret.then(
                   (val) => { resolve(val); },
                   (reason) => { reject(reason); }
