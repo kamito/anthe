@@ -49,7 +49,10 @@ class Core {
             try {
               let ret = callback(...args);
               if (ret instanceof Promise) {
-                resolve(ret);
+                ret.then(
+                  (val) => { resolve(val); },
+                  (reason) => { reject(reason); }
+                );
               } else {
                 if (_.isUndefined(ret)) {
                   resolve([]);
